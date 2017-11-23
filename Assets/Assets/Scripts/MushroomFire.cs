@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MushroomFire : MonoBehaviour {
+public class MushroomFire : MonoBehaviour
+{
+
+
     [Header("Fire gun super sonic lol boum")]
 
     [SerializeField]
     GameObject bulletPrefab;
     [SerializeField]
-    Transform guntransform;
+    Transform[] guntransform;
     [SerializeField]
     float bulletVelocity = 2;
     [SerializeField]
@@ -18,6 +21,7 @@ public class MushroomFire : MonoBehaviour {
 
     void Start ()
     {
+        
         StartCoroutine(fire());
     }
 	
@@ -29,6 +33,7 @@ public class MushroomFire : MonoBehaviour {
     {
         while (true)
         {
+            Debug.Log("rentre");
             yield return new WaitForSeconds(timetofire);
             foreach (Transform t in guntransform)
             {

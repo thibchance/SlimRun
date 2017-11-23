@@ -43,13 +43,9 @@ public class Pausemanager : MonoBehaviour {
     }
     public void onresumeGameButtonDown()
     {
-        if (Input.GetButton("Pause") && !isinpause)
-        {
             isinpause = false;
             panelpause.SetActive(false);
             uigamepanel.SetActive(true);
             Time.timeScale = 1;
-        }
-
     }
 }
