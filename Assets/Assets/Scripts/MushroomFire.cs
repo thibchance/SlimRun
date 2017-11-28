@@ -15,7 +15,9 @@ public class MushroomFire : MonoBehaviour
     [SerializeField]
     float bulletVelocity = 2;
     [SerializeField]
-    float timetofire = 2;
+    float timetofire = 0.1f;
+
+    const int FIRE = 2;
     
     // Use this for initialization
 
@@ -39,7 +41,7 @@ public class MushroomFire : MonoBehaviour
             {
                 GameObject bullet = Instantiate(bulletPrefab, t.position, t.rotation);
                 bullet.GetComponent<Rigidbody2D>().velocity = t.right * bulletVelocity;
-                Destroy(bullet, 5);
+                Destroy(bullet, FIRE);
             }
 
         }

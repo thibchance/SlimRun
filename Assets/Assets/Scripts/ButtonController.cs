@@ -7,21 +7,31 @@ using UnityEngine.SceneManagement;
 public class ButtonController : MonoBehaviour
 {
     [SerializeField]
-     Button button;
-	// Use this for initialization
-	void Start ()
+    Button button;
+    [SerializeField]
+    Button buttonexit;
+
+
+    // Use this for initialization
+    void Start()
     {
-        Button btn = button.GetComponent<Button>();
-        btn.onClick.AddListener(btnClick);
-	}
-	
-    void btnClick()
+        
+
+
+    }
+
+    public void btnClick()
     {
         SceneManager.LoadScene("GameLevel");
+
     }
-	// Update is called once per frame
-	void Update ()
+    public void btnExit()
     {
-		
-	}
+        Application.Quit();
+    }
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
 }

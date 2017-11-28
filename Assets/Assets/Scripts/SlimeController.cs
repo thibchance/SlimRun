@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class SlimeController : MonoBehaviour
 {
 
@@ -18,17 +18,26 @@ public class SlimeController : MonoBehaviour
     [SerializeField]
     private float forcejump = 5;
 
+
+   
     private Rigidbody2D rigidbody;
 	// Use this for initialization
 	void Start ()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        
+
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         float Horizontal_Input = Input.GetAxis("Horizontal");
+        //if (Input.GetAxis("Horizontal"))
+        //{
+
+        //}
+
         Vector2 forcedirection = new Vector2(Horizontal_Input, 0);
         forcedirection *= force;
         rigidbody.AddForce(forcedirection);
@@ -37,6 +46,18 @@ public class SlimeController : MonoBehaviour
         {
             rigidbody.AddForce(Vector2.up * forcejump, ForceMode2D.Impulse);
         }
+       
+    }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "collision")
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+        if (collision.gameObject.tag == "hit")
+        {
+            SceneManager.LoadScene("GameOver");
+        }
     }
 }
