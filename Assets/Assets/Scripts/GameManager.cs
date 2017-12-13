@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     {
 
-        Debug.Log("score");
+        //Debug.Log("score");
         if (scoreincreasing)
         {
             score += pointseconds * Time.deltaTime;

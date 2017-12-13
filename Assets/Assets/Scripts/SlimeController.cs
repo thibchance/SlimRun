@@ -18,14 +18,14 @@ public class SlimeController : MonoBehaviour
     [SerializeField]
     private float forcejump = 5;
 
-
+    private PlatformGenerator platformgenerator;
    
     private Rigidbody2D rigidbody;
 	// Use this for initialization
 	void Start ()
     {
         rigidbody = GetComponent<Rigidbody2D>();
-        
+        platformgenerator = FindObjectOfType<PlatformGenerator>();
 
     }
 
@@ -44,7 +44,7 @@ public class SlimeController : MonoBehaviour
         bool touchfloor = Physics2D.OverlapCircle(positionRaycastJump.position, radiusRaycastJump, LayerMaskJump);
         if (Input.GetAxis("Jump") > 0 && touchfloor)
         {
-            rigidbody.AddForce(Vector2.up * forcejump, ForceMode2D.Impulse);
+            //rigidbody.velocity = new Vector2()
         }
        
     }
@@ -56,6 +56,19 @@ public class SlimeController : MonoBehaviour
             SceneManager.LoadScene("GameOver");
         }
         if (collision.gameObject.tag == "hit")
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+       
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Generator")
+        {
+            platformgenerator.RandomPlatfromGenerator();
+        }
+
+        if(collision.tag == "LimitDie")
         {
             SceneManager.LoadScene("GameOver");
         }

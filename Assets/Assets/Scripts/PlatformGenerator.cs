@@ -9,35 +9,53 @@ public class PlatformGenerator : MonoBehaviour {
     [SerializeField]
     private Transform pointplatform;
     public float distanceplatform;
-    
+    [SerializeField]
+    Transform[] spawnplatformgenerator;
+
     private float platformwidth;
 
-    [SerializeField]
-    private Renderer renderer;
+    //[SerializeField]
+    //private Renderer renderer;
     // Use this for initialization
     void Start ()
     {
-        renderer = GetComponent<Renderer>();
+       // renderer = GetComponent<Renderer>();
         platformwidth = platform.GetComponent<BoxCollider2D>().size.x;
-	}
+        
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-       //tranforms.position.x = au centre 
-       //
-        if (/*renderer.bounds.min.x*/ transform.position.x <= pointplatform.position.x)
-        {
-            transform.position = new Vector3(transform.position.x /*renderer.bounds.min.x */+ platformwidth + distanceplatform, transform.position.y, transform.position.z);
-            
-            Instantiate(platform, transform.position, transform.rotation);
-        }
+       // RandomPlatfromGenerator();
+
+        //tranforms.position.x = au centre 
+        //
+        //if (/*renderer.bounds.min.x*/ transform.position.x <= pointplatform.position.x)
+        //{
+        //    transform.position = new Vector3(transform.position.x /*renderer.bounds.min.x */+ platformwidth + distanceplatform, transform.position.y, transform.position.z);
+
+        //    Instantiate(platform, transform.position, transform.rotation);
+        //}
 
     }
-   
-    public void OnDrawGizmosSelected()
+
+    public void RandomPlatfromGenerator()
     {
-        Vector3 max = renderer.bounds.max;
-        Vector3 min = renderer.bounds.min;
+        int spawnindex = Random.Range(0, spawnplatformgenerator.Length);
+
+        if (/*renderer.bounds.min.x*/ spawnplatformgenerator[spawnindex].position.x <= pointplatform.position.x)
+        {
+            transform.position = new Vector3(spawnplatformgenerator[spawnindex].position.x /*renderer.bounds.min.x */+ platformwidth + distanceplatform, transform.position.y, transform.position.z);
+
+            Instantiate(platform, spawnplatformgenerator[spawnindex].position, transform.rotation);
+        }
     }
+    
+
+    //public void OnDrawGizmosSelected()
+    //{
+    //    Vector3 max = renderer.bounds.max;
+    //    Vector3 min = renderer.bounds.min;
+    //}
 }

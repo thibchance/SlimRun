@@ -6,6 +6,8 @@ TagManager:
   tags:
   - collision
   - hit
+  - Generator
+  - LimitDie
   layers:
   - Default
   - TransparentFX
