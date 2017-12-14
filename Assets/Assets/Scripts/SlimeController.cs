@@ -6,9 +6,7 @@ using UnityEngine.UI;
 public class SlimeController : MonoBehaviour
 {
 
-    [Header("Physics")]
-    [SerializeField]
-    float force = 10;
+   
     [Header("Jump")]
     [SerializeField]
     private Transform positionRaycastJump;
@@ -27,9 +25,9 @@ public class SlimeController : MonoBehaviour
 
     [Header("Velocity")]
     [SerializeField]
-    const int VELOCITY_NUMBER_X = 10;
+    const int VELOCITY_NUMBER_X = 15;
     [SerializeField]
-    const int VELOCITY_NUMBER_y = 50;
+    const int VELOCITY_NUMBER_y = 25;
     private PlatformGenerator platformgenerator;
 
     private Rigidbody2D rigidbody;
@@ -39,27 +37,27 @@ public class SlimeController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         platformgenerator = FindObjectOfType<PlatformGenerator>();
 
-        //StartCoroutine(mouvement());
+        textscore.text = TEXT_SCORE + score;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //float Horizontal_Input = Input.GetAxis("Horizontal");
-        //if (Input.GetButtonDown("Horizontal"))
+        
+        rigidbody.velocity = new Vector2(VELOCITY_NUMBER_X, rigidbody.velocity.y);
+        //bool touchfloor = Physics2D.OverlapCircle(positionRaycastJump.position, radiusRaycastJump, LayerMaskJump);
+        //if (Input.GetAxis("Jump") > 0 && touchfloor)
         //{
+            
 
         //}
-
-        //Vector2 forcedirection = new Vector2(Horizontal_Input, 0);
-        //forcedirection *= force;
-        //rigidbody.AddForce(forcedirection);
-        rigidbody.velocity = new Vector2(VELOCITY_NUMBER_X, 0);
-        bool touchfloor = Physics2D.OverlapCircle(positionRaycastJump.position, radiusRaycastJump, LayerMaskJump);
-        if (Input.GetAxis("Jump") > 0 && touchfloor)
+        if(Input.GetButtonDown("Jump"))
         {
-            rigidbody.velocity = new Vector2(0, VELOCITY_NUMBER_y);
-
+            if (rigidbody.velocity.y == 0)
+            {
+                rigidbody.velocity = new Vector2(rigidbody.velocity.x, VELOCITY_NUMBER_y);
+            }
+            
         }
         
     }  
@@ -86,8 +84,9 @@ public class SlimeController : MonoBehaviour
             {
                 SceneManager.LoadScene("GameOver");
             }
-            if (collision.tag == "ScoreTrigger")
+            if (collision.tag == "Score")
             {
+            Debug.Log("ICI");
                 score++;
                 textscore.text = TEXT_SCORE + score;
             }
