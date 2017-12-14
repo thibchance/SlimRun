@@ -8,6 +8,7 @@ TagManager:
   - hit
   - Generator
   - LimitDie
+  - Score
   layers:
   - Default
   - TransparentFX
