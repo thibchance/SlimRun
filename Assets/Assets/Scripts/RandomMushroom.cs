@@ -9,8 +9,6 @@ public class RandomMushroom : MonoBehaviour
     [SerializeField]
     Transform[] spawnmushroom;
 
-
-    float spawntime;
 	// Use this for initialization
 	void Start ()
     {
@@ -26,13 +24,11 @@ public class RandomMushroom : MonoBehaviour
     {
         // int mushroomindex = Random.Range(0, mushroom.Length);
         int spawnPointIndex = Random.Range(0, spawnmushroom.Length);
+        int mushroomindex = Random.Range(0, mushroom.Length);
         // Instantiate(mushroom[mushroomindex], spawnmushroom[spawnPointIndex].position, spawnmushroom[0].rotation);
-        spawntime = 0;
         for (int i = 0; i < spawnmushroom.Length; i++)
         {
-            int mushroomindex = Random.Range(0, mushroom.Length);
             Instantiate(mushroom[mushroomindex], spawnmushroom[i].position, spawnmushroom[0].rotation);
-            spawntime = 0;
         }
 
 

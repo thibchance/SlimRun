@@ -6,12 +6,13 @@ public class SoundsManager : MonoBehaviour {
 
 
     [SerializeField]
-    AudioClip tablesounds;
+    AudioClip[] tablesounds;
     private AudioSource audiosource;
     // Use this for initialization
     void Start ()
     {
         audiosource = GetComponent<AudioSource>();
+      //  DontDestroyOnLoad(audiosource);
     }
 	
 	// Update is called once per frame
@@ -20,8 +21,8 @@ public class SoundsManager : MonoBehaviour {
 	}
     public void PlaySound()
     {
-
-        audiosource.clip = tablesounds;
+        int indexsoundrandom = Random.Range(0, tablesounds.Length);
+        audiosource.clip = tablesounds[indexsoundrandom];
         audiosource.Play();
     }
 }

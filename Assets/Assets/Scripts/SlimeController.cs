@@ -6,35 +6,33 @@ using UnityEngine.UI;
 public class SlimeController : MonoBehaviour
 {
 
-   
-    [Header("Jump")]
-    [SerializeField]
-    private Transform positionRaycastJump;
-    [SerializeField]
-    private float radiusRaycastJump;
-    [SerializeField]
-    private LayerMask LayerMaskJump;
-    [SerializeField]
-    private float forcejump = 5;
-
-
+    private int offsetscore = 0;
     private int score = 0;
     [SerializeField]
     Text textscore;
-    private const string TEXT_SCORE = "Score =";
+    private const string TEXT_SCORE = "Score = ";
 
     [Header("Velocity")]
     [SerializeField]
-    const int VELOCITY_NUMBER_X = 15;
+    float Velocity_X;
     [SerializeField]
-    const int VELOCITY_NUMBER_y = 25;
+    float Velocity_Y;
+    [SerializeField]
+    bool isGrounded;
+    [SerializeField] float speed;
+
+    [SerializeField] float speedmvt;
     private PlatformGenerator platformgenerator;
 
-    private Rigidbody2D rigidbody;
+    [Header("Sound")]
+    [SerializeField]
+    private SoundsManager soundhit;
+
+    private Rigidbody2D body;
     // Use this for initialization
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        body = GetComponent<Rigidbody2D>();
         platformgenerator = FindObjectOfType<PlatformGenerator>();
 
         textscore.text = TEXT_SCORE + score;
@@ -43,53 +41,68 @@ public class SlimeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        rigidbody.velocity = new Vector2(VELOCITY_NUMBER_X, rigidbody.velocity.y);
-        //bool touchfloor = Physics2D.OverlapCircle(positionRaycastJump.position, radiusRaycastJump, LayerMaskJump);
-        //if (Input.GetAxis("Jump") > 0 && touchfloor)
-        //{
-            
-
-        //}
-        if(Input.GetButtonDown("Jump"))
+        if (offsetscore == 2)
         {
-            if (rigidbody.velocity.y == 0)
-            {
-                rigidbody.velocity = new Vector2(rigidbody.velocity.x, VELOCITY_NUMBER_y);
-            }
-            
+            Velocity_X += speedmvt;
+            offsetscore = 0;
         }
-        
-    }  
-        private void OnCollisionEnter2D(Collision2D collision)
+      
+    }
+
+
+    private void FixedUpdate()
+    {  
+        body.velocity = new Vector2(Velocity_X, body.velocity.y);
+
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
+            body.velocity = body.velocity + Vector2.up * speed;
+            isGrounded = false;
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Platform"))
+        {
+            isGrounded = true;
+        }
             if (collision.gameObject.tag == "collision")
-            {
-                SceneManager.LoadScene("GameOver");
-            }
-            if (collision.gameObject.tag == "hit")
-            {
-                SceneManager.LoadScene("GameOver");
-            }
-
-        }
-        private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.tag == "Generator")
-            {
-                platformgenerator.RandomPlatfromGenerator();
-            }
-
-            if (collision.tag == "LimitDie")
-            {
-                SceneManager.LoadScene("GameOver");
-            }
-            if (collision.tag == "Score")
-            {
-            Debug.Log("ICI");
-                score++;
-                textscore.text = TEXT_SCORE + score;
-            }
+            
+        SceneManager.LoadScene("GameOver");
+        // soundhit.PlaySound();
         }
+        
+    if (collision.gameObject.tag == "hit")
+        {
+            
+            SceneManager.LoadScene("GameOver");
+            // soundhit.PlaySound();
+        }
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.tag == "Generator")
+        {
+            platformgenerator.RandomPlatfromGenerator();
+        }
+
+        if (collision.tag == "LimitDie")
+        {
+            SceneManager.LoadScene("GameOver");
+            // soundhit.PlaySound();
+        }
+        if (collision.tag == "Score")
+        {
+        Debug.Log("ICI");
+            offsetscore++;
+            score++;
+            textscore.text = TEXT_SCORE + score;
+
+        }
+    }
     }
 

@@ -17,7 +17,7 @@ public class MushroomFire : MonoBehaviour
     [SerializeField]
     float timetofire = 0.1f;
 
-    const int FIRE = 2;
+    const int FIRE = 5;
     
     // Use this for initialization
 
