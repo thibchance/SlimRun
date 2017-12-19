@@ -9,8 +9,13 @@ public class SlimeController : MonoBehaviour
     private int offsetscore = 0;
     private int score = 0;
     [SerializeField]
+    int highscore = 0;
+    [SerializeField]
     Text textscore;
     private const string TEXT_SCORE = "Score = ";
+    [SerializeField]
+    Text texthighscore;
+    private const string TEXT_HIGHSCORE = "HighScore = ";
 
     [Header("Velocity")]
     [SerializeField]
@@ -24,10 +29,7 @@ public class SlimeController : MonoBehaviour
     [SerializeField] float speedmvt;
     private PlatformGenerator platformgenerator;
 
-    [Header("Sound")]
-    [SerializeField]
-    private SoundsManager soundhit;
-
+    
     private Rigidbody2D body;
     // Use this for initialization
     void Start()
@@ -36,6 +38,7 @@ public class SlimeController : MonoBehaviour
         platformgenerator = FindObjectOfType<PlatformGenerator>();
 
         textscore.text = TEXT_SCORE + score;
+        texthighscore.text = TEXT_HIGHSCORE + PlayerPrefs.GetInt("HighScore = ", 0).ToString();
     }
 
     // Update is called once per frame
@@ -47,6 +50,7 @@ public class SlimeController : MonoBehaviour
             offsetscore = 0;
         }
       
+        
     }
 
 
@@ -100,7 +104,19 @@ public class SlimeController : MonoBehaviour
         Debug.Log("ICI");
             offsetscore++;
             score++;
+            textscore.text = score.ToString();
+
+            if (score > PlayerPrefs.GetInt("HighScore = ", 0))
+            {
+                PlayerPrefs.SetInt("HighScore = ", score);
+                texthighscore.text = score.ToString();
+            }
+
+            
             textscore.text = TEXT_SCORE + score;
+            texthighscore.text = TEXT_HIGHSCORE + highscore;
+
+
 
         }
     }
